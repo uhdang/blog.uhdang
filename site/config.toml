@@ -1,7 +1,9 @@
 title = "Delicious Code Reciepe"
 baseURL = "/"
 languageCode = "en-us"
-theme = "ananke"
+theme = "vienna"
+# Copyright notice. This is displayer in the footer.
+copyright = "&copy; Copyright notice"
 
 MetaDataFormat = "yaml"
 DefaultContentLanguage = "en"
@@ -10,25 +12,30 @@ Paginate = 3 # this is set low for demonstrating with dummy content. Set to a hi
 googleAnalytics = ""
 enableRobotsTXT = true
 
+[params]
+    # Social accounts. Link to these accounts are displayed in the header and
+    # footer.
+    twitter = "Your Twitter username"
+    github = "Your GitHub username"
+    linkedin = "Your LinkedIn username"
+    googleplus = "Your Google+ user id"
+    facebook = "Your Facebook username"
+    stackoverflow = "Your Stackoverflow user id (number)"
+    keybase = "Your keybase.io username"
+    instagram = "Your Instagram username"
+    # Disqus shortname
+    disqus = "Your disqus shortname"
+    # Google Analytics API key.
+    ga_api_key = "Your Google Analytics tracking id"
+    # Mixpanel API key.
+    mixpanel_api_key = "Your Mixpanel API key"
+    author = "Your Name"
+    avatar = "/path/to/avatar"
+    contact = "Your contact link (ex. mailto:foo@example.com)"
+    bio = "Your short bio"
+    # Short subtitle/tagline. This is displayed in the header.
+    subtitle = "Short subtitle/tagline of your blog"
+
+
 [blackfriday]
   extensions = ["hardLineBreak"]
-
-[sitemap]
-  changefreq = "monthly"
-  priority = 0.5
-  filename = "sitemap.xml"
-
-[params]
-  fontbody = "Roboto"
-  body_classes = "sans-serif bg-transparent"
-  favicon = ""
-  description = "The last theme you'll ever need. Maybe."
-  facebook = ""
-  twitter = "https://twitter.com/GoHugoIO"
-  instagram = ""
-  youtube = ""
-  github = ""
-  linkedin = ""
-  # choose a background color from any on this page: http://tachyons.io/docs/themes/skins/ and preface it with "bg-"
-  background_color_class = "bg-black"
-  featured_image = "/images/gohugo-default-sample-hero-image.jpg"
