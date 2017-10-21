@@ -32,3 +32,5 @@ Unlike theme updating in regular _Hugo_ quickstart tutorial, base directory for 
 ## Font Change in a Hugo Website
 
 https://stoned.io/web-development/hugo/How-To-Dynamically-Use-Google-Fonts-In-A-Hugo-Website/
+
+* This technique will be useful when you have a customized theme of your own. 
