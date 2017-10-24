@@ -27,6 +27,13 @@ $ hugo new post/first.md
 Something to remember when updating theme.
 Unlike theme updating in regular _Hugo_ quickstart tutorial, base directory for updating theme has to be '`/site`' , not '`/`'
 
+### Theme Change
+
+- get theme using submodule option at `/themes` folder - https://gohugo.io/getting-started/quick-start/
+- change `theme` value to corresponding theme name in `config.tml`.
+- copy / paste layout from given theme layout `index` file to src layout `index` file.
+
+
 ### Font Change in a Hugo Website
 
 Link: https://stoned.io/web-development/hugo/How-To-Dynamically-Use-Google-Fonts-In-A-Hugo-Website/
