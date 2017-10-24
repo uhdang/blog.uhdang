@@ -1,5 +1,5 @@
 ---
-title: "Recipe #3. Learn DevOps Part 3"
+title: "Recipe #3. Learn DevOps Part 2"
 date: 2017-10-16T06:46:07+02:00
 draft: false
 ---
@@ -93,3 +93,83 @@ With a deployment object you can:
 <br>
 demo video shows command usages well
 <br>
+
+### Section 2, Lecture 27 - Services
+
+- _Pods_ are very _dynamic_, they come and go on the Kubernetes cluster.
+  - When using a _Replication Controller_, pods are _terminated_ and created during scaling operations.
+  - When using _Deployments_, when _updating_ the image version, pods are _terminated_ and new pods take the place of older pods.
+- That's why Pods should never be accessed directly but always through a _Service_.
+- A service is the _logical bridge_ between the "mortal" pods and other _services_ or _end-users_.
+- When using the "kubectl expose" command earlier, you created a new Service for your pod, so it could be accessed externally.
+- Creating a service will create an endpoint for your pod(s):
+  - a _ClusterIP_: a virtual IP address only reachable from within the cluster (this is the default)
+  - a _NodePort_: a port that is the same on each node that is also reachable externally.
+  - a _LoadBalancer_: a LoadBalancer created by the _cloud provider_ that will route external traffic to every node on the NodePort (ELB on AWS)
+- The options above only allow you to create _virtual IPs_ or _ports_
+- There is alos a possibility to use _DNS names_
+- Service Example:
+
+![service_example](/images/service_example.png)
+
+### Section 2, Lecture 28 - Demo: Service
+
+```
+# Node check
+$ kubectl get node
+
+# Pod check
+$ kubectl get pods
+
+# in case pods need to be made, here is the command to create pod
+$ kubectl create -f first-app/helloworld.yml
+
+# describe the pod
+$ kubectl describe pod [pod name]
+```
+
+after pods are running, lets run service
+
+```
+$ kubectl create -f first-app/helloworld-nodeport-service.yml
+```
+
+In AWS, by goint to 'security group' menu, you can check url and check if service is running.
+
+```
+# command to describe service
+$ kubectl describe svc helloworld-service
+
+# get summary of all running services
+$ kubectl get svc
+
+# delete the service
+$ kubectl delete svc [service name]
+```
+
+### Section 2, Lecture 29 - Labels
+
+### Section 2, Lecture 30 - Demo: Labels
+
+### Section 2, Lecture 31 - Health Checks
+
+- if your application _malfunctions_, the pod and container can still be running, but the application might not work anymore.
+- To _detect_ and _resolve_ problems with your application, you can run _health checks_.
+- You can run 2 different types of health checks
+  - Running a _command_ in the container _periodically_.
+  - Periodic checks on a _URL_(HTTP)
+- The typical production application behind a load balancer should always have _health checks_ implemented in some way to ensure _availability_ and _resiliency_ of the app.
+
+![health_check](/images/healthcheck_example.png)
+
+### Section 2, Lecture 32 - Demo: Health checks
+
+### Section 2, Lecture 33 - Secrets
+
+### Section 2, Lecture 34 - Demo: Credentials using Volumes
+
+### Section 2, Lecture 35 - Demo: Running Wordpress on Kubenernetes
+
+### Section 2, Lecture 36 - WebUI
+
+### Section 2, Lecture 37 - Demo: WebUI
