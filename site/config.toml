@@ -1,7 +1,7 @@
 title = "Delicious Code Reciepe"
 baseURL = "/"
 languageCode = "en-us"
-theme = "vienna"
+theme = "hyde"
 # Copyright notice. This is displayer in the footer.
 copyright = "&copy; Copyright notice"
 
@@ -13,29 +13,8 @@ googleAnalytics = ""
 enableRobotsTXT = true
 
 [params]
-    # Social accounts. Link to these accounts are displayed in the header and
-    # footer.
-    twitter = "Your Twitter username"
-    github = "Your GitHub username"
-    linkedin = "Your LinkedIn username"
-    googleplus = "Your Google+ user id"
-    facebook = "Your Facebook username"
-    stackoverflow = "Your Stackoverflow user id (number)"
-    keybase = "Your keybase.io username"
-    instagram = "Your Instagram username"
-    # Disqus shortname
-    disqus = "Your disqus shortname"
-    # Google Analytics API key.
-    ga_api_key = "Your Google Analytics tracking id"
-    # Mixpanel API key.
-    mixpanel_api_key = "Your Mixpanel API key"
-    author = "Your Name"
-    avatar = "/path/to/avatar"
-    contact = "Your contact link (ex. mailto:foo@example.com)"
-    bio = "Your short bio"
-    # Short subtitle/tagline. This is displayed in the header.
-    subtitle = "Short subtitle/tagline of your blog"
-
+    themeColor = "theme-base-0e"
+    layoutReverse = false
 
 [blackfriday]
   extensions = ["hardLineBreak"]
