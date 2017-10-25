@@ -1,25 +1,102 @@
 ---
 title: "Recipe #2. Learn DevOps Part 1"
-date: 2017-10-16T06:46:07+02:00
+date: 2017-10-25T06:46:07+02:00
 draft: false
 ---
 <br>
 
 
-# Setup
+# Cloud Setup
 
-### 1. How to setup Vagrant Box
+### Virtual Machine Setup and Usage - Vagrant
 
+Setup
+ 
+```
+$ mkdir ubuntu
+$ cd ubuntu
+$ vagrant init ubuntu/xenial64
+$ vagrant up
 
-# Usage
+$ vagrant ssh-config
+$ vagrant ssh
+```
 
-### Open Linux Box on virtual machine
+Open Linux Box on virtual machine
+
 ```
 $ cd
 $ cd ubuntu
 $ vagrant up
 $ vagrant ssh
 ```
+
+### Kops (Kubernetes Operations) setup in VM
+
+```
+$ wget https://github.com/kubernetes/kops/releases/tag/1.7.1/kops-linux-amd64   # download the latest kops
+$ chmod +x kops-linux-amd64                                                     # Add execution permissions
+$ sudo mv kops-linux-amd64 /usr/local/bin/kops                                  # Move the kops to /usr/local/bin
+
+$ sudo mv /usr/local/bin/kops-linux-amd64 /usr/local/bin/kops                   # rename kops binary to kops instead of kops-linux-amd64
+                                                                                # use if necessary 
+```
+
+### Setup AWS CLI in VM
+
+```
+$ sudo apt-get install python-pip       # necessary to download AWS
+$ sudo pip install awscli               # install aws commandline tool
+```
+
+In order to use AWS from the command line, you need to make connection. For this, you first need to add a user at `Identity & Access Management` section of AWS Dashboard. Create a user and generate an **access key** that you will need to configure AWS on your VM.
+
+After creating a user, configure AWS in your VM shell.
+
+```
+$ aws congfigure    # Input private key + secret private key.
+                    # No need for region and output format
+
+$ ls -ahl ~/.aws/   # will give `config` and `credentials` folder as proof of configuration.
+```
+
+Make sure to go to `user` option in `Identity & Access Management`, and _Attach Policy_ to give **AdministratorAccess**
+
+
+### Create S3 Bucket for Kops State
+
+![create_s3_bucket](/images/create_s3_bucket.png)
+
+Go to S3 section in AWS dashboard and create a S3 bucket for Kops state. Make sure to give a name with a *random string* at the end, for this name has to be unique in the Region. Region you specify here will be where your cluster will be created.
+
+Tip. www.cloudping.info provides Latency from where you are.
+
+
+### DNS Setup
+
+Go to Route53 and create a hosted zone. Whatever name it gives, it will have the values that needs to be connected to Domain. (Domain -> Value)
+
+Note. How you connect Value to the domain depends on where you get the Domain.
+
+
+# Cluster setup using AWS Cli
+
+Install kubectl
+```
+$ wget https://storage.googleapis.com/kubernetes-release/release/v1.6.1/bin/darwin/amd64/kubectl
+$ sudo mv kubectl /usr/local/bin/           # move it to bin
+$ sudo chmod -x /usr/local/bin/kubectl      # give execution permission
+$ kubectl                                   # check kubectl availability
+```
+
+Create `ssh key` to log-in to the cluster
+
+```
+$ ssh-keygetn -f .ssh/id_rsa        # generate ssh-key to .ssh/id_rsa 
+```
+
+
+
 
 ### Deleting Instances and Volumes
 

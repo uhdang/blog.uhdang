@@ -13,7 +13,7 @@ googleAnalytics = ""
 enableRobotsTXT = true
 
 [params]
-    themeColor = "theme-base-0e"
+    themeColor = "theme-base-08"
     layoutReverse = false
 
 [blackfriday]
