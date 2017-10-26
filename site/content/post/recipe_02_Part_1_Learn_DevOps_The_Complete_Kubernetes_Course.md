@@ -1,9 +1,13 @@
 ---
-title: "Recipe #2. Learn DevOps Part 1"
+title: "Recipe #2. Learn DevOps Part 1 - Kubernetes Setup"
 date: 2017-10-25T06:46:07+02:00
 draft: false
 ---
 <br>
+
+# General Workflow (Rough)
+
+VM setup => Connect it to AWS => Run Kubernetes Cluster => Run Image on created Node => Docker setup + run => upload as Docker registry => Create Kubernetes Pod => ... => Run app behind a load balancer
 
 
 # Cloud Setup
@@ -95,12 +99,72 @@ Create `ssh key` to log-in to the cluster
 $ ssh-keygetn -f .ssh/id_rsa        # generate ssh-key to .ssh/id_rsa 
 ```
 
+Create cluster
+```
+$ kops create cluster --name=kubernetes.newtech.academy --state=s3://kops-state-b429b --zones=eu-west-1a --node-count=2 --node-size=t2.micro --master-size=t2.micro --dns-zone=kubernetes.newtech.academy       # this will give you a preview before creating cluster
+```
 
+Command Analysis
 
+- --name : full DNS name
+- --state : save state in stated s3 bucket
+- --zone : zone where cluster will be created
+- --node-count : node count
+- --node-size : node size
+- --master-size : master node size
+- --dns-zone : DNS name
 
-### Deleting Instances and Volumes
+This command will create one master (t2.micro) and two nodes (t2.micro) 
 
-(Starting from ssh-ing to the account from VM Linux Machine)
+```
+$ kops update cluster kubernetes.newtech.academy --yes      # once ready input this command given from a preview
+```
+
+Note. There are multiple suggestions from preview for editing before launching as well as launching command.
+
+![cluster_launch_review](/images/cluster_launch_review.png)
+
+You can check _username_ and _password_ kubernetes has configured for us in a certificate at `config` file, of which path is displayed at the end of cluster creation. You can 'cat' it - `cat ~/.kube/config`.
+<br>
+
+### Workflow
+
+VM setup => Connect it to AWS => Run Kubernetes Cluster(**this is where we are**) => Run Image on created Node
+
+# Useful Kubernetes Commands
+
+Check Node
+
+```
+$ kubectl get node      # can check which nodes are running
+```
+
+Check Service
+
+```
+$ kubectl get service       # you can check deployment, port, and others.
+```
+
+Run a service on node
+
+```
+$ kubectl run hello-minikube --image=gcr.io/google_container/echoserver:1.4 --port=8080         # run minikube on node
+```
+
+Note. Typically when you want to access a service you put ELB in front. But you can still expose the port without it with below command.
+
+```
+$ kubectl expose deployment hello-minikube --type=NodePort      # expose deployment
+$ kubectl get service                                           # need to check exposed port and open it in order to access it directly without ELB
+```
+
+After checking an exposed port, go to Security Groups in VPC management section from AWS dashboard, access _Inbound Rules_ of master node, and specify `Port Range` as exposed port. 
+
+![expose_service_port](/images/expose_service_port.png)
+
+*You can check a created route from Route 53 (i.e. api.kubernetes.newtech.academy) and try accessing it in url as well.
+
+Deleting Instances and Volumes
 
 ```
 $ kops delete cluster --name kubernetes.newtech.academy --state=s3://kops-state-b429b # names are placeholders
@@ -109,54 +173,50 @@ $ kops delete cluster --name kubernetes.newtech.academy --state=s3://kops-state-
 
 ```
 
-### Dockerizing
+<br>
+# Sorted up till here
 
 
+# Dockerizing
 
-
-# Section 1, Lection 14
-
-In Vagrant Box,
-
-### Install Docker
+Install Docker
 
 ```
 $ sudo apt-get install docker.io
 $ docker -v
 ```
-<br>
 
-### Install Git
-
-```
-$ sudo apt-get install git
-```
-
-so that I can use `git clone`
-<br>
-
-### Docker build
-
-Build a container following commands from `dockerfile`
+Install Git
 
 ```
-$ docker build .
+$ sudo apt-get install git          # so that I can use `git clone`
 ```
-<br>
 
-### Docker Run
+Docker build
+
+```
+$ docker build .            # Build a container following commands from `dockerfile`
+```
+
+Docker Run
+
 ```
 $ docker run -p 3000:3000 -it [docker id]
 ```
 
-Run [docker id] container **getting** from port 3000 to **exposing** to port 3000 of the host system.
+Note. Run [docker id] container **getting** from port 3000 to **exposing** to port 3000 of the host system.
 
 Note: Left 3000 is where this app is running on. 
 And we want to expose it as 3000 (right 3000) on the host system. In tutorial, 'ubuntu-xenial' is the host system.
 
-##### How to Check
+**How to Check**
 
 open another window and command `curl localhost:3000` will display whatever the app is supposed to display.
+
+
+
+
+--- Up till here Line ---
 
 
 # Section 1, Lecture 15 - Docker Registry
