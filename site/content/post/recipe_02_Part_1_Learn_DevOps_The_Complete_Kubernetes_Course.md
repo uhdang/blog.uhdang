@@ -131,7 +131,7 @@ You can check _username_ and _password_ kubernetes has configured for us in a ce
 
 VM setup => Connect it to AWS => Run Kubernetes Cluster(**this is where we are**) => Run Image on created Node
 
-# Useful Kubernetes Commands
+# Useful 'kubectl' Commands
 
 Check Node
 
