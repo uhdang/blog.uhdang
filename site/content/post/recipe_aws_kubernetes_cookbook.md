@@ -4,6 +4,11 @@ date: 2017-12-07T15:31:42+01:00
 draft: false 
 ---
 
+# Useful Resource
+
+- https://github.com/aws-samples/aws-workshop-for-kubernetes : Complete cookbook for aws kubernetes deployment
+- https://github.com/kubernetes/kops : repository for kops (Kubernetes Operations)
+
 
 # General Workflow (Rough)
 
